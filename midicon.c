@@ -108,8 +108,8 @@ int get_pot_value(struct pot* pot)
 	pot->previous_value = pot->value;
 	
 	// read the new value and if it is more than 2 unit away from old one, set changed flag to true
-	pot->value = map(adc_read(), 0, 0xfff, 0, 0xff);
-	if (abs(pot->value - pot->previous_value) > 0x01) pot->changed = true;
+	pot->value = map(adc_read(), 0, 0xfff, 0, 0x7f) * 2;
+	if (abs(pot->value - pot->previous_value) >= 0x02) pot->changed = true;
 
 	return 0; 
 }
