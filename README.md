@@ -15,9 +15,8 @@ However, I run into a problem whenever I am trying to use these SSD1306 librarie
 One thing I tried to do is run TUD_TASK() often enough to maintain MIDI contact with the computer; perhaps now I am running it too often, but it is working. 
 
 # Making controls work to send messages only on changes
-I would like not to flood my midi device with constant midi changes messages. So currently I am at the state of testing ways to only send data on a change. Oddly when I make it send only when the change is "2 midi units" or less, it rarely sends and misses a great deal of refinement.  But the pots are currently so noisy that the read message bounces around a lot causing lots of controller change messages sent continuously. 
+I would like not to flood my midi device with constant midi changes messages.  After some experimentation, I am now sampling the adc up to a 1000 time and averaging the result before setting the midi-out value.  Then check if midi-out value changed from previous value and if so, sending it.  That makes it send only when I have changed the pot.  But in practice there is still a delay and not too smooth.  1000 times may be too much and still playing with that. 
 
-I guess it is a little like 'debouncing a switch' but with a pot.  
 
 
 
