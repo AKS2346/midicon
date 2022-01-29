@@ -19,6 +19,9 @@
 #define S2 13
 #define NUMBER_OF_POTS 6
 #define NUMBER_OF_BUTTONS 2
+#define STARTING_CONTROLLER_FOR_POTS 44
+#define STARTING_CONTROLLER_FOR_BUTTONS 82
+
 
 enum  {
   BLINK_NOT_MOUNTED = 250,
@@ -63,7 +66,7 @@ struct pot pots[NUMBER_OF_POTS];
 void init_pots(struct pot pots[])
 {
 	uint8_t mux_address = 0; 
-	uint8_t controller_number = 44; 
+	uint8_t controller_number = STARTING_CONTROLLER_FOR_POTS;
 	uint8_t default_value = 63;
 
 	for (int i = 0; i < NUMBER_OF_POTS; i++)
@@ -107,9 +110,21 @@ int get_pot_value(struct pot* pot)
 	// store the previous value and set change flag to false
 	pot->previous_value = pot->value;
 	
+	// cycle through and read average of 10 reads; to reduce the jitter in any one reading
+	 int number_of_readings = 1000; 
+	 int sum_of_readings = 0;
+	 int average_reading = 0; 
+
+	 for (int i = 0; i < number_of_readings ; i++)
+	 {
+		 sum_of_readings += adc_read();
+	 } 
+
+	 average_reading = (int) sum_of_readings / number_of_readings; 
+		
 	// read the new value and if it is more than 2 unit away from old one, set changed flag to true
-	pot->value = map(adc_read(), 0, 0xfff, 0, 0x7f) * 2;
-	if (abs(pot->value - pot->previous_value) >= 0x02) pot->changed = true;
+	pot->value = map(average_reading, 0, 0xfff, 0, 0xff);
+	if (abs(pot->value - pot->previous_value) > 1) pot->changed = true;
 
 	return 0; 
 }
@@ -141,7 +156,7 @@ void init_buttons(struct button buttons[])
 {
 	// set up some starting values
 	uint8_t	gpio_address = 2; 
-	uint8_t controller_number = 82; 
+	uint8_t controller_number = STARTING_CONTROLLER_FOR_BUTTONS; 
 
 	// Loop through buttons
 	for (int i = 0; i < NUMBER_OF_BUTTONS; i ++) 
