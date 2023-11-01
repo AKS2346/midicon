@@ -1,7 +1,8 @@
 /** 
  * Daschr's Oled example from 2021 github.com/daschr/pico_ssd1306
- *
- * 
+ * This is midicon the midi controller code I wrote in 2022 and stopped working wiht a new coputer in 2023
+ * I am now recompiling and attempting to get it to work after updating the pico-sdk and tinyusb to version 0.51
+ * Anil, Nov 1 2023
  */
 
 #include <stdio.h>

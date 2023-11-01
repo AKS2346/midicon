@@ -103,9 +103,6 @@ uint8_t const desc_hs_configuration[] =
   // Config number, interface count, string index, total length, attribute, power in mA
   TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 100),
 
- // 1st CDC: Interface number, string index, EP notification address and size, EP data address (out, in) and size.
-  TUD_CDC_DESCRIPTOR(ITF_NUM_CDC_0, 4, EPNUM_CDC_0_NOTIF, 8, EPNUM_CDC_0_OUT, EPNUM_CDC_0_IN, 64),
-
   // Interface number, string index, EP Out & EP In address, EP size
   TUD_MIDI_DESCRIPTOR(ITF_NUM_MIDI, 0, EPNUM_MIDI, 0x80 | EPNUM_MIDI, 512)
 };
@@ -137,7 +134,6 @@ char const* string_desc_arr [] =
   "Raspberry Pi",                     // 1: Manufacturer
   "Pico Demo Device",              // 2: Product
   "123456",                      // 3: Serials, should use chip ID
-  "TinyUSB CDC",                      // 4: CDC Interface
 };
 
 static uint16_t _desc_str[32];
