@@ -110,7 +110,7 @@ int get_pot_value(struct pot* pot)
 	// store the previous value and set change flag to false
 	pot->previous_value = pot->value;
 	
-	// cycle through and read average of 10 reads; to reduce the jitter in any one reading
+	// cycle through and read average of 1000 reads; to reduce the jitter in any one reading
 	 int number_of_readings = 1000; 
 	 int sum_of_readings = 0;
 	 int average_reading = 0; 
